@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surprise Romantis untuk Tasya - Hari Valentine</title>
+    <!-- Bootstrap CSS untuk desain profesional dan responsif -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(135deg, #ffb6c1, #ffe4e1, #f0e68c); /* Gradien pink lembut seperti mawar */
+        color: #333;
+        overflow-x: hidden;
+      }
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        padding: 20px; /* Tambahan padding untuk mobile */
+      }
+      .hero h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 4rem;
+        color: #da70d6; /* Ungu pink seperti mawar */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .heart-icon {
+        font-size: 5rem;
+        color: #ff69b4; /* Pink cerah seperti mawar */
+        animation: float 3s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .buttons {
+        margin-top: 30px;
+      }
+      .btn-surprise {
+        background: #da70d6; /* Ungu pink */
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        margin: 10px;
+        border-radius: 50px;
+        transition: all 0.3s;
+      }
+      .btn-surprise:hover {
+        background: #c71585; /* Pink lebih gelap */
+        transform: scale(1.05);
+      }
+      .envelope {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
+        height: auto;
+        min-width: 280px; /* Sedikit dikurangi untuk mobile */
+        min-height: 180px;
+        max-width: 90vw; /* Responsif di mobile */
+        background: #f8f9fa;
+        border: 2px solid #da70d6; /* Border pink */
+        border-radius: 10px;
+        display: none;
+        z-index: 1000;
+        cursor: pointer;
+        transition: all 0.5s;
+        padding: 10px; /* Padding tambahan untuk rapi */
+      }
+      .envelope.open {
+        /* Ukuran menyesuaikan konten tanpa scale */
+      }
+      .envelope::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        background: #da70d6; /* Tutup envelope pink */
+        clip-path: polygon(0 0, 50% 100%, 100% 0);
+        transition: all 0.5s;
+      }
+      .envelope.open::before {
+        transform: translateY(-10px);
+      }
+      .envelope-content {
+        padding: 15px; /* Dikurangi untuk mobile */
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+      .envelope.open .envelope-content {
+        opacity: 1;
+      }
+      .photo-effect {
+        animation: wow 1s ease-in-out;
+        max-width: 100%; /* Pastikan tidak melebihi envelope */
+        max-height: 180px; /* Batasi tinggi foto agar tidak terlalu besar */
+        object-fit: cover; /* Agar proporsi tetap bagus */
+      }
+      @keyframes wow {
+        0% {
+          transform: scale(0.5) rotate(-10deg);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.1) rotate(5deg);
+        }
+        100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 999;
+      }
+      .message-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin: 50px auto;
+        max-width: 600px;
+      }
+      .message-card p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+      }
+      .footer {
+        background: #da70d6; /* Footer pink */
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      .confetti {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .confetti-piece {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #ff69b4; /* Confetti pink */
+        animation: fall 5s linear infinite;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(100vh) rotate(360deg);
+        }
+      }
+      /* Media query untuk mobile */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem; /* Ukuran font lebih kecil di HP */
+        }
+        .heart-icon {
+          font-size: 3rem;
+        }
+        .btn-surprise {
+          padding: 12px 20px;
+          font-size: 1rem;
+        }
+        .envelope {
+          min-width: 250px;
+          min-height: 150px;
+        }
+        .envelope-content {
+          padding: 10px;
+        }
+        .photo-effect {
+          max-height: 150px; /* Lebih kecil di mobile */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div>
+        <div class="heart-icon">💖</div>
+        <h1>Happy Valentine's Day, Tasya!</h1>
+        <p class="lead">Coba dehh kamu buka tombol di bawah hehe.</p>
+        <div class="buttons">
+          <button class="btn-surprise" onclick="showEnvelope(1)">Pesan</button>
+          <button class="btn-surprise" onclick="showEnvelope(2)">Coba ini apa</button>
+          <button class="btn-surprise" onclick="showEnvelope(3)">Harapan</button>
+        </div>
+      </div>
+      <!-- Confetti Effect -->
+      <div class="confetti" id="confetti"></div>
+    </section>
+
+    <!-- Overlay dan Envelope -->
+    <div class="overlay" id="overlay" onclick="closeEnvelope()"></div>
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+      <div class="envelope-content" id="envelope-content">
+        <!-- Konten akan diisi oleh JavaScript -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2023 Surprise Romantis. Dibuat dengan ❤️ untuk Tasya.</p>
+    </footer>
+
+    <!-- Backsound Musik Romantis -->
+    <audio id="background-music" autoplay loop>
+      <source src="audio/Bukan Lagu Valentine.mp3" type="audio/mpeg" />
+      <!-- Jika file tidak dimuat, ganti dengan URL publik seperti: https://www.soundjay.com/misc/sounds/bell-ringing-05.wav -->
+      <!-- Pastikan file MP3 ada di folder 'audio' atau gunakan URL hosting -->
+    </audio>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></script>
+    <!-- JavaScript untuk efek confetti dan envelope -->
+    <script>
+      let currentSurprise = 0; // Untuk menyimpan nomor surprise yang dipilih
+
+      function createConfetti() {
+        const confetti = document.getElementById("confetti");
+        for (let i = 0; i < 50; i++) {
+          const piece = document.createElement("div");
+          piece.className = "confetti-piece";
+          piece.style.left = Math.random() * 100 + "%";
+          piece.style.animationDelay = Math.random() * 5 + "s";
+          confetti.appendChild(piece);
+        }
+      }
+      createConfetti();
+
+      function showEnvelope(surpriseNumber) {
+        currentSurprise = surpriseNumber;
+        const envelope = document.getElementById("envelope");
+        const overlay = document.getElementById("overlay");
+        const content = document.getElementById("envelope-content");
+
+        // Kosongkan konten dulu (tertutup)
+        content.innerHTML = "";
+
+        // Tampilkan overlay dan envelope (tertutup)
+        overlay.style.display = "block";
+        envelope.style.display = "block";
+        envelope.classList.remove("open"); // Pastikan tertutup
+      }
+
+      function openEnvelope() {
+        const envelope = document.getElementById("envelope");
+        const content = document.getElementById("envelope-content");
+
+        // Isi konten berdasarkan surprise
+        const contents = {
+          1: "<h3>Pesan</h3><p>Haiii wanita cantik, bersyukur dehh rasanya bisa dipertemukan sama kamu, bukan karna ketidaksengajaan tapi emang ini yang ditakdirkan Allah buat aku bisa ketemu kamu dan kenal kamu.</p>",
+          2: "<h3>Foto Mahal</h3><img src=\"assets/Cie.jpeg\" alt='Foto Kenangan' class='photo-effect img-fluid rounded'>",
+          3: "<h3>Harapan</h3><p>Harapan aku yaa walaupun hubungan kita kemaren sempet kandas, aku harap kita bisa balik lagi kaya dulu karna aku mau benerin apa yang sebelumnya kurang di hubungan kita kemaren.</p>",
+        };
+
+        content.innerHTML = contents[currentSurprise];
+
+        // Tambahkan kelas open untuk animasi dan tampilkan konten
+        envelope.classList.add("open");
+      }
+
+      function closeEnvelope() {
+        const envelope = document.getElementById("envelope");
+        const overlay = document.getElementById("overlay");
+
+        // Hapus kelas open
+        envelope.classList.remove("open");
+
+        // Sembunyikan setelah animasi
+        setTimeout(() => {
+          envelope.style.display = "none";
+          overlay.style.display = "none";
+        }, 500);
+      }
+
+      // Fungsi untuk memutar musik jika autoplay diblokir
+      document.addEventListener("click", function () {
+        const music = document.getElementById("background-music");
+        music.play().catch((e) => console.log("Autoplay diblokir, klik untuk memutar"));
+      });
+    </script>
+  </body>
+</html>
